@@ -19,11 +19,11 @@ class Searchbar extends Component {
     this.setState({searchValue: event.currentTarget.value.toLowerCase()})
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
 
     if (this.state.searchValue.trim() === '') {
-      toast.error('Please enter search query field', {theme: "colored"})
+      toast.error('Please enter search query field', { theme: "colored", autoClose: 3000 })
       return;
     }
     this.props.onSubmit(this.state.searchValue);

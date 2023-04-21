@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { ToastContainer } from "react-toastify";
 
 import Searchbar from "./Searchbar/Searchbar";
+import ImageGallery from "./ImageGallery/ImageGallery";
 
 import { AppStyle } from "./App/App.styled";
 
@@ -10,16 +11,18 @@ class App extends Component {
     searchQuery: '',
   }
 
-  handleFormSubmit = (userSearch) => {
-    this.setState({ searchQuery: userSearch });
+  handleFormSubmit = async (userSearch) => {
+  this.setState({ searchQuery: userSearch });
   }
 
   render() {
     return (
       <AppStyle>
+        <ToastContainer />
         
         <Searchbar onSubmit={this.handleFormSubmit} />
-        <ToastContainer />
+        
+        <ImageGallery searchQuery={this.state.searchQuery} />
 
       </AppStyle>
     )
