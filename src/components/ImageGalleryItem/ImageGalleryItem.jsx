@@ -1,11 +1,17 @@
 import { ImageItem, Image } from "./ImageGalleryItem.styled";
 
 
-export const ImageGalleryItem = ({ image }) => {
-  const { webformatURL, tags } = image;
+export const ImageGalleryItem = ({ image, onImageClick }) => {
+  const { largeImageURL, webformatURL, tags } = image;
+
   return (
-    <ImageItem className="gallery-item">
-      <Image src={webformatURL} alt={tags} />
+    <ImageItem
+      onClick={event => {
+        event.preventDefault();
+        onImageClick({ largeImageURL, tags });
+      }}
+    >
+      <Image src={webformatURL} alt={tags} loading="lazy" />
     </ImageItem>
   )
 

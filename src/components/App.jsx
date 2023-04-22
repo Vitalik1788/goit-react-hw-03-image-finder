@@ -9,13 +9,15 @@ import { AppStyle } from "./App/App.styled";
 class App extends Component {
   state = {
     searchQuery: '',
-  }
+}
 
   handleFormSubmit = async (userSearch) => {
   this.setState({ searchQuery: userSearch });
   }
 
+  
   render() {
+
     return (
       <AppStyle>
         <ToastContainer />
@@ -23,6 +25,9 @@ class App extends Component {
         <Searchbar onSubmit={this.handleFormSubmit} />
         
         <ImageGallery searchQuery={this.state.searchQuery} />
+
+        
+        
 
       </AppStyle>
     )
