@@ -7,11 +7,11 @@ import Loader from 'components/Loader/Loader';
 
 import { ImageList } from './ImageGallery.styled';
 
-const Status = {
-  IDLE: 'idle',
-  PENDING: 'pending',
-  RESOLVED: 'resolved',
-  REJECTED: 'rejected',
+const STATUS = {
+  idle: 'idle',
+  pending: 'pending',
+  resolved: 'resolved',
+  rejected: 'rejected',
 };
 
 let PAGE = 1;
@@ -22,32 +22,32 @@ class ImageGallery extends Component {
     images: null,
     showModal: false,
     modalData: null,
-    status: Status.IDLE,
+    status: STATUS.idle,
     error: '',
     totalHits: 0,
   };
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.searchQuery !== this.props.searchQuery) {
-      this.setState({ status: Status.PENDING });
+      this.setState({ status: STATUS.pending });
       fetchImages(this.props.searchQuery, PAGE)
         .then(images => {
           this.setState({
             images: images.hits,
-            status: Status.RESOLVED,
+            status: STATUS.resolved,
             totalHits: images.totalHits,
           });
         })
-        .catch(error => this.setState({ error, status: Status.REJECTED }));
+        .catch(error => this.setState({ error, status: STATUS.rejected }));
     }
   }
 
   onLoadMoreImg = async () => {
-    this.setState({ status: Status.PENDING });
+    this.setState({ status: STATUS.pending });
     const { hits } = await fetchImages(this.props.searchQuery, (PAGE += 1));
     this.setState(prevState => ({
       images: [...prevState.images, ...hits],
-      status: Status.RESOLVED,
+      status: STATUS.resolved,
     }));
   };
 
@@ -63,7 +63,7 @@ class ImageGallery extends Component {
     const { images, showModal, modalData, status, error, totalHits } =
       this.state;
 
-    if (status === Status.IDLE) {
+    if (status === STATUS.idle) {
       return (
         <h1 style={{ textAlign: 'center' }}>
           Enter image name in search field ;)
@@ -71,7 +71,7 @@ class ImageGallery extends Component {
       );
     }
 
-    if (status === Status.PENDING) {
+    if (status === STATUS.pending) {
       return (
         <>
           <ImageList>
@@ -91,11 +91,11 @@ class ImageGallery extends Component {
       );
     }
 
-    if (status === Status.REJECTED) {
+    if (status === STATUS.rejected) {
       return <div>{error.message}</div>;
     }
 
-    if (status === Status.RESOLVED) {
+    if (status === STATUS.resolved) {
       return (
         <>
           <ImageList>
