@@ -33,6 +33,7 @@ class ImageGallery extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.searchQuery !== this.props.searchQuery) {
+      PAGE = 1;
       this.setState({ status: STATUS.pending });
       fetchImages(this.props.searchQuery, PAGE)
         .then(images => {
