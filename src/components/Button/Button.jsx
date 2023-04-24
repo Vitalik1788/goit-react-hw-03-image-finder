@@ -1,8 +1,8 @@
 import { Loadmore } from "./Button.styled";
 
-const LoadMoreButton = () => {
+const LoadMoreButton = ({children, loadMore = null}) => {
   return (
-    <Loadmore type="button">Load More</Loadmore>
+    <Loadmore type="button" onClick={loadMore}>{children}</Loadmore>
   )
 }
 
