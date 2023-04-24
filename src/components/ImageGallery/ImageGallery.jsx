@@ -7,7 +7,6 @@ import Loader from 'components/Loader/Loader';
 import { ImageList, Alert } from './ImageGallery.styled';
 import { PropTypes } from 'prop-types';
 
-
 const STATUS = {
   idle: 'idle',
   pending: 'pending',
@@ -34,17 +33,19 @@ class ImageGallery extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.searchQuery !== this.props.searchQuery) {
-      PAGE = 1;
-      this.setState({ status: STATUS.pending });
-      fetchImages(this.props.searchQuery, PAGE)
-        .then(images => {
+      try {
+        PAGE = 1;
+        this.setState({ status: STATUS.pending });
+        fetchImages(this.props.searchQuery, PAGE).then(images => {
           this.setState({
             images: images.hits,
             status: STATUS.resolved,
             totalHits: images.totalHits,
           });
-        })
-        .catch(error => this.setState({ error, status: STATUS.rejected }));
+        });
+      } catch (error) {
+        this.setState({ error, status: STATUS.rejected });
+      }
     }
   }
 
@@ -131,11 +132,13 @@ class ImageGallery extends Component {
     }
 
     if (status === STATUS.resolved && images.length === 0) {
-      return <Alert>Sorry we don`t found images or foto with your searchQuery :( <br />
-        Try again with new searchQuery :)</Alert>
-      ;
+      return (
+        <Alert>
+          Sorry we don`t found images or foto with your searchQuery :( <br />
+          Try again with new searchQuery :)
+        </Alert>
+      );
     }
-
   }
 }
 
