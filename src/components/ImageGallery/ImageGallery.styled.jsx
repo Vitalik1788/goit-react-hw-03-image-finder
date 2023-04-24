@@ -12,5 +12,12 @@ export const ImageList = styled.ul`
   list-style: none;
   margin-left: auto;
   margin-right: auto;
+`
+
+export const Alert = styled.div`
+  padding-top: 50px;
+  text-align: center;
+  color: blue;
+  font-size: 38px;
 
 `

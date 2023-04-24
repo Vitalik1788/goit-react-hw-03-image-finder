@@ -4,8 +4,9 @@ import Modal from '../Modal/Modal';
 import LoadMoreButton from 'components/Button/Button';
 import fetchImages from 'components/ApiService/ApiService';
 import Loader from 'components/Loader/Loader';
-import { ImageList } from './ImageGallery.styled';
+import { ImageList, Alert } from './ImageGallery.styled';
 import { PropTypes } from 'prop-types';
+
 
 const STATUS = {
   idle: 'idle',
@@ -100,7 +101,7 @@ class ImageGallery extends Component {
       return <div>{error.message}</div>;
     }
 
-    if (status === STATUS.resolved) {
+    if (status === STATUS.resolved && images.length !== 0) {
       return (
         <>
           <ImageList>
@@ -128,6 +129,13 @@ class ImageGallery extends Component {
         </>
       );
     }
+
+    if (status === STATUS.resolved && images.length === 0) {
+      return <Alert>Sorry we don`t found images or foto with your searchQuery :( <br />
+        Try again with new searchQuery :)</Alert>
+      ;
+    }
+
   }
 }
 
