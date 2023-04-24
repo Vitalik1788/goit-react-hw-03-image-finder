@@ -1,4 +1,5 @@
 import { ImageItem, Image } from "./ImageGalleryItem.styled";
+import { PropTypes } from 'prop-types';
 
 
 export const ImageGalleryItem = ({ image, onImageClick }) => {
@@ -14,5 +15,9 @@ export const ImageGalleryItem = ({ image, onImageClick }) => {
       <Image src={webformatURL} alt={tags} loading="lazy" />
     </ImageItem>
   )
-
 }
+
+ImageGalleryItem.propTypes = {
+  image: PropTypes.object.isRequired,
+  onImageClick: PropTypes.func.isRequired,
+};

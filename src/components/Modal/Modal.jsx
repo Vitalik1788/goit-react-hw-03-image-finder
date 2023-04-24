@@ -1,31 +1,37 @@
 import { Component } from "react";
 import { Overlay, Modals } from "./Modal.styled";
 import { createPortal } from "react-dom";
+import { PropTypes } from 'prop-types';
 
 const modalRoot = document.querySelector('#modal-root');
 
 
 export default class Modal extends Component {
+  
+  static propTypes = {
+    closeModal: PropTypes.func.isRequired,
+    modalData: PropTypes.object.isRequired,
+  };
 
   componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown)
+    window.addEventListener('keydown', this.handleKeyDown);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown)
-  }
-  
-  handleKeyDown = e => {
-    if (e.code === "Escape") {
-      this.props.closeModal();
-      }
+    window.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  handleBackdropClick = e => {    
-    if (e.currentTarget === e.target) {
-      this.props.closeModal()
+  handleKeyDown = e => {
+    if (e.code === 'Escape') {
+      this.props.closeModal();
     }
-  }
+  };
+
+  handleBackdropClick = e => {
+    if (e.currentTarget === e.target) {
+      this.props.closeModal();
+    }
+  };
 
   render() {
     const { largeImageURL, tags } = this.props.modalData;
@@ -34,6 +40,8 @@ export default class Modal extends Component {
         <Modals>
           <img src={largeImageURL} alt={tags} />
         </Modals>
-      </Overlay>, modalRoot)      
+      </Overlay>,
+      modalRoot
+    );
   }
 }

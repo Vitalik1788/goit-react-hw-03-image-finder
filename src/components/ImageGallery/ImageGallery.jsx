@@ -4,8 +4,8 @@ import Modal from '../Modal/Modal';
 import LoadMoreButton from 'components/Button/Button';
 import fetchImages from 'components/ApiService/ApiService';
 import Loader from 'components/Loader/Loader';
-
 import { ImageList } from './ImageGallery.styled';
+import { PropTypes } from 'prop-types';
 
 const STATUS = {
   idle: 'idle',
@@ -17,6 +17,10 @@ const STATUS = {
 let PAGE = 1;
 
 class ImageGallery extends Component {
+  static propTypes = {
+    searchQuery: PropTypes.string.isRequired,
+  };
+
   state = {
     value: '',
     images: null,

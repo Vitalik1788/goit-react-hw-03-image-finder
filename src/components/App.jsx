@@ -7,31 +7,25 @@ import ImageGallery from "./ImageGallery/ImageGallery";
 import { AppStyle } from "./App/App.styled";
 
 class App extends Component {
+  
   state = {
     searchQuery: '',
-}
+  };
 
-  handleFormSubmit = async (userSearch) => {
-  this.setState({ searchQuery: userSearch });
-  }
+  handleFormSubmit = async userSearch => {
+    this.setState({ searchQuery: userSearch });
+  };
 
-  
   render() {
-
     return (
       <AppStyle>
         <ToastContainer />
-        
+
         <Searchbar onSubmit={this.handleFormSubmit} />
-        
+
         <ImageGallery searchQuery={this.state.searchQuery} />
-
-        
-        
-
       </AppStyle>
-    )
-
+    );
   }
 }
 
