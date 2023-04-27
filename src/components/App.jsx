@@ -7,6 +7,7 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import fetchImages from '../ApiService/ApiService';
 import Modal from './Modal/Modal';
 import LoadMoreButton from './Button/Button';
+import Loader from './Loader/Loader';
 
 
 class App extends Component {
@@ -68,6 +69,8 @@ class App extends Component {
         {totalPage > 1 && !isLoading && images.length !== 0 && (
           <LoadMoreButton loadMore={this.onLoadMoreImg} />
         )}
+
+        {isLoading && <Loader />}
 
         {showModal && (
           <Modal modalData={modalData} closeModal={this.closeModal} />
