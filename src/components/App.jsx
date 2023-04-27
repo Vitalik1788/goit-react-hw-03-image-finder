@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { AppStyle } from './App/App.styled';
+import { AppStyle, Alert, Error } from './App/App.styled';
 
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
@@ -9,9 +9,7 @@ import Modal from './Modal/Modal';
 import LoadMoreButton from './Button/Button';
 import Loader from './Loader/Loader';
 
-
 class App extends Component {
-  
   state = {
     searchQuery: '',
     images: [],
@@ -23,17 +21,23 @@ class App extends Component {
     error: null,
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    const { searchQuery, page} = this.state;
-    if (prevState.searchQuery !== searchQuery || prevState.page !== page) {
-      this.setState({isLoading: true})
-      fetchImages(searchQuery, page).then(data =>
+  async componentDidUpdate(prevProps, prevState) {
+    try {
+      const { searchQuery, page } = this.state;
+      if (prevState.searchQuery !== searchQuery || prevState.page !== page) {
+        this.setState({ isLoading: true });
+        const data = await fetchImages(searchQuery, page);
         this.setState(prevState => ({
           images: [...prevState.images, ...data.hits],
           totalHits: data.totalHits,
           isLoading: false,
-        }))
-      );
+        }));
+      }
+    } catch (error) {
+      this.setState({
+        error: error.message,
+        isLoading: false,
+      });
     }
   }
 
@@ -44,7 +48,7 @@ class App extends Component {
   onLoadMoreImg = () => {
     this.setState(prevState => ({
       page: prevState.page + 1,
-    }))
+    }));
   };
 
   openModal = modalData => {
@@ -56,7 +60,15 @@ class App extends Component {
   };
 
   render() {
-    const { images, modalData, showModal, totalHits, isLoading } = this.state;
+    const {
+      images,
+      modalData,
+      showModal,
+      totalHits,
+      isLoading,
+      searchQuery,
+      error,
+    } = this.state;
     const totalPage = totalHits / images.length;
 
     return (
@@ -74,6 +86,22 @@ class App extends Component {
 
         {showModal && (
           <Modal modalData={modalData} closeModal={this.closeModal} />
+        )}
+        {images.length === 0 &&
+          searchQuery !== '' &&
+          !isLoading &&
+          error === null && (
+            <Alert>
+              No images with search query: {searchQuery} :( <br />
+              Try with new search query :)
+            </Alert>
+          )}
+
+        {error && (
+          <Error>
+            Sorry, there was an error with the application: <br /> {error}, try
+            again later
+          </Error>
         )}
       </AppStyle>
     );
