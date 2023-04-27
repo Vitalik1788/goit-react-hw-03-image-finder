@@ -5,12 +5,13 @@ import { PropTypes } from 'prop-types';
 
 const modalRoot = document.querySelector('#modal-root');
 
-
 export default class Modal extends Component {
-  
   static propTypes = {
     closeModal: PropTypes.func.isRequired,
-    modalData: PropTypes.object,
+    modalData: PropTypes.shape({
+      largeImageURL: PropTypes.string.isRequired,
+      tags: PropTypes.string.isRequired,
+    }),
   };
 
   componentDidMount() {

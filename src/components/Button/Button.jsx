@@ -10,6 +10,5 @@ const LoadMoreButton = ({loadMore}) => {
 export default LoadMoreButton;
 
 LoadMoreButton.propTypes = {
-  children: PropTypes.node,
   loadMore: PropTypes.func.isRequired,
 };

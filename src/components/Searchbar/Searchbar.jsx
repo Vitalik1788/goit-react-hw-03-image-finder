@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { PropTypes } from 'prop-types';
 
 class Searchbar extends Component {
+  
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
   };
