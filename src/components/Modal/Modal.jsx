@@ -10,7 +10,7 @@ export default class Modal extends Component {
   
   static propTypes = {
     closeModal: PropTypes.func.isRequired,
-    modalData: PropTypes.object.isRequired,
+    modalData: PropTypes.object,
   };
 
   componentDidMount() {
