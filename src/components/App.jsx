@@ -8,20 +8,9 @@ import fetchImages from '../ApiService/ApiService';
 import Modal from './Modal/Modal';
 import LoadMoreButton from './Button/Button';
 
-const STATUS = {
-  idle: 'idle',
-  pending: 'pending',
-  resolved: 'resolved',
-  rejected: 'rejected',
-};
 
 class App extends Component {
-  // const totalPage = total / images.length;
-
-  // {totalPage > 1 && !isLoading && images.length !== 0 && (
-  //         <Button onClick={this.onLoadMore} />
-  //       )}
-
+  
   state = {
     searchQuery: '',
     images: [],
